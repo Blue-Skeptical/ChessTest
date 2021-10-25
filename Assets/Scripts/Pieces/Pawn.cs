@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Pawn : ChessPiece
 {
+    //For double its movement on first move
+    private bool firstMove = true;
     protected override List<Vector2Int> GenerateAllowedMovePosition()
     {
         List<Vector2Int> res = new List<Vector2Int>();
@@ -13,7 +15,14 @@ public class Pawn : ChessPiece
         {
             //Forward
             if (MatchManager.MM.InsideBoard(X, Y + 1) && (PiecesPosition[X, Y + 1] == null))
+            {
                 res.Add(new Vector2Int(X, Y + 1));
+                if(firstMove && PiecesPosition[X,Y+2] == null)
+                {
+                    firstMove = false;
+                    res.Add(new Vector2Int(X, Y + 2));
+                }
+            }
             //Takes
             if (MatchManager.MM.InsideBoard(X + 1, Y + 1) && 
                 PiecesPosition[X + 1, Y + 1] != null && 
@@ -30,7 +39,15 @@ public class Pawn : ChessPiece
         {   
             //Forward
             if (MatchManager.MM.InsideBoard(X, Y - 1) && (PiecesPosition[X, Y - 1] == null))
+            {
                 res.Add(new Vector2Int(X, Y - 1));
+
+                if (firstMove && PiecesPosition[X, Y - 2] == null)
+                {
+                    firstMove = false;
+                    res.Add(new Vector2Int(X, Y - 2));
+                }
+            }
             //Takes
             if (MatchManager.MM.InsideBoard(X + 1, Y - 1) && 
                 PiecesPosition[X + 1, Y - 1] != null && 

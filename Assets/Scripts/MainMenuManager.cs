@@ -8,7 +8,9 @@ public class MainMenuManager : MonoBehaviour
 {
     public static MainMenuManager MMM;
 
+    [SerializeField] private GameObject Title;
     [SerializeField] private Button ToMenuButton;
+    [SerializeField] private Button Exit;
     [SerializeField] private Button VsAIButton;
     [SerializeField] private Button VsFriendButton;
     [SerializeField] private PostProcessVolume TransitionPostProcess;
@@ -28,6 +30,8 @@ public class MainMenuManager : MonoBehaviour
         VsAIButton.gameObject.SetActive(false);
         VsFriendButton.gameObject.SetActive(false);
         ToMenuButton.gameObject.SetActive(true);
+        Title.SetActive(false);
+        Exit.gameObject.SetActive(false);
         //Tell to Manager to start a match against AI
         MatchManager.MM.MatchBegin(true, false);
     }
@@ -41,6 +45,8 @@ public class MainMenuManager : MonoBehaviour
         VsAIButton.gameObject.SetActive(false);
         VsFriendButton.gameObject.SetActive(false);
         ToMenuButton.gameObject.SetActive(true);
+        Title.SetActive(false);
+        Exit.gameObject.SetActive(false);
         //Tell the manager to start a match with both players humans
         MatchManager.MM.MatchBegin(true, true);
     }
@@ -56,8 +62,14 @@ public class MainMenuManager : MonoBehaviour
         VsFriendButton.gameObject.SetActive(true);
         VsAIButton.gameObject.SetActive(true);
         ToMenuButton.gameObject.SetActive(false);
+        Title.SetActive(true);
+        Exit.gameObject.SetActive(true);
     }
 
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
     //Deactivate the MainMenuPostProcess Profile
     private IEnumerator BeginTransitionToGame(float seconds)
     {
